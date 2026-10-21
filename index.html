@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f7f7f1"><title>PantryChef — Bếp nhà mình</title>
+<style>
+:root{--ink:#24352c;--muted:#718076;--green:#2e6847;--paper:#f7f7f1;--line:#e5e9df;--card:#fff;--red:#a23e2c}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+header{height:68px;padding:0 max(20px,calc((100vw - 1120px)/2));display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);background:#fbfbf7}
+.brand{font-size:20px;font-weight:800;text-decoration:none;color:var(--ink)}.tag{font-size:12px;color:var(--muted)}
+main{max-width:1120px;margin:auto;padding:28px 22px}.hero{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:34px 40px;border-radius:25px;background:linear-gradient(115deg,#e8efdc,#f4edda)}
+.eyebrow{font-size:10px;font-weight:800;letter-spacing:1.5px;color:var(--green)}h1{font-size:clamp(30px,4vw,48px);line-height:1.1;letter-spacing:-1.5px;margin:10px 0}h1 em{font-style:normal;color:var(--green)}.hero p{color:#647268;max-width:520px;line-height:1.6}.hero-art{font-size:92px;padding:12px}
+.actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px}button,.button{border:0;border-radius:11px;background:var(--green);color:white;padding:11px 15px;font-weight:700;cursor:pointer;font:inherit;font-size:13px}button.secondary{background:#e7efdf;color:var(--green)}button.danger{background:#fae8e4;color:var(--red)}button:disabled{opacity:.5;cursor:not-allowed}
+.section-title{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:30px 0 14px}.section-title h2{font-size:23px;margin:0}.muted{color:var(--muted);font-size:12px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.stat{background:white;border:1px solid var(--line);border-radius:15px;padding:17px}.stat span{font-size:12px;color:var(--muted)}.stat strong{display:block;font-size:26px;margin-top:5px}
+.panel{background:white;border:1px solid var(--line);border-radius:17px;padding:20px}.form-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1.4fr auto;gap:10px;align-items:end}
+label{display:block;font-size:12px;font-weight:700;color:#536157;margin-bottom:6px}input,select{width:100%;min-width:0;border:1px solid #dfe5da;border-radius:10px;padding:11px;background:#fff;color:var(--ink);font:inherit;font-size:13px}
+.inventory,.recipes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}.item,.recipe{border:1px solid var(--line);border-radius:15px;padding:16px;background:white}.item-top,.recipe-top{display:flex;justify-content:space-between;gap:10px}.item h3,.recipe h3{font-size:16px;margin:0 0 7px}.item p,.recipe p{font-size:12px;color:var(--muted);line-height:1.5;margin:0 0 10px}.item-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}.item-actions button{padding:8px 10px;font-size:12px}
+.chip{display:inline-block;background:#e7efdf;color:var(--green);border-radius:99px;padding:5px 8px;font-size:10px;font-weight:800}.chip.warn{background:#fff0d9;color:#89551d}.chip.missing{background:#fae8e4;color:var(--red)}
+.recipe-emoji{font-size:27px}.recipe-meta{font-size:11px;color:var(--green);font-weight:700;display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}.ingredients-list{font-size:12px;line-height:1.7;padding-left:18px}.steps{font-size:12px;line-height:1.8;padding-left:20px}
+.notice{margin-top:22px;padding:14px 16px;background:#fff8e9;border:1px solid #f0dfbe;border-radius:13px;font-size:12px;line-height:1.6;color:#75664d}
+.empty{padding:24px;text-align:center;color:var(--muted);background:#fff;border:1px dashed var(--line);border-radius:14px;grid-column:1/-1}
+.toast{position:sticky;top:8px;z-index:5;margin:12px 0;padding:12px 15px;background:#e7efdf;color:var(--green);border-radius:10px;font-size:13px}.toast.error{background:#fae8e4;color:var(--red)}footer{margin-top:35px;padding:18px 0;border-top:1px solid var(--line);display:flex;justify-content:space-between;color:var(--muted);font-size:11px}
+dialog{border:0;border-radius:18px;max-width:480px;width:calc(100% - 28px);padding:22px;box-shadow:0 18px 60px #0003}dialog::backdrop{background:#18261e77}dialog h2{margin-top:0}dialog .form-grid{grid-template-columns:1fr 1fr}
+@media(max-width:760px){header{padding:0 16px}.tag{font-size:10px}main{padding:18px 14px}.hero{padding:24px 20px;border-radius:19px}.hero-art{font-size:52px;padding:0}.hero h1{font-size:32px}.stats{grid-template-columns:1fr}.stat{padding:13px 15px}.form-grid{grid-template-columns:1fr 1fr}.form-grid .wide{grid-column:1/-1}.inventory,.recipes{grid-template-columns:1fr}.section-title{align-items:start;flex-direction:column}.panel{padding:15px}footer{gap:10px;flex-wrap:wrap}}
+</style>
+</head>
+<body>
+<header><a class="brand" href="/">🥬 PantryChef</a><span class="tag">Bếp gọn · Ăn ngon · Đỡ lãng phí</span></header>
+<main>
+<section class="hero"><div><div class="eyebrow">TRỢ LÝ NẤU ĂN THÔNG MINH</div><h1>Hôm nay nấu gì<br><em>từ những gì đang có?</em></h1><p>Quản lý thực phẩm, khám phá món phù hợp và ưu tiên nguyên liệu cần dùng sớm.</p><div class="actions"><button onclick="document.querySelector('#add-panel').scrollIntoView({behavior:'smooth'})">+ Thêm nguyên liệu</button><button class="secondary" onclick="loadAll()">Làm mới dữ liệu</button></div></div><div class="hero-art" aria-hidden="true">🥗</div></section>
+<div id="toast" hidden class="toast"></div>
+<section class="section-title"><div><div class="eyebrow">TỔNG QUAN</div><h2>Bếp nhà mình</h2></div><span class="muted" id="status">Đang kết nối cơ sở dữ liệu…</span></section>
+<section class="stats"><article class="stat"><span>Danh mục nguyên liệu</span><strong id="ingredient-count">—</strong></article><article class="stat"><span>Mục trong kho</span><strong id="pantry-count">—</strong></article><article class="stat"><span>Công thức</span><strong id="recipe-count">—</strong></article></section>
+<section class="section-title" id="add-panel"><div><div class="eyebrow">QUẢN LÝ THỰC PHẨM</div><h2>Thêm nguyên liệu vào kho</h2></div></section>
+<section class="panel"><form id="add-form" class="form-grid">
+<div class="wide"><label for="ingredient">Nguyên liệu</label><select id="ingredient" required></select></div>
+<div><label for="quantity">Số lượng</label><input id="quantity" type="number" min="0.01" step="0.01" value="1" required></div>
+<div><label for="unit">Đơn vị</label><input id="unit" value="quả" required></div>
+<div><label for="expiry">Hạn sử dụng</label><input id="expiry" type="date"></div>
+<div><button type="submit">Lưu vào kho</button></div>
+</form></section>
+<section class="section-title"><div><div class="eyebrow">TỒN KHO</div><h2>Nguyên liệu đang có</h2></div><span class="muted">Dữ liệu lưu trong database</span></section>
+<section id="inventory" class="inventory"><div class="empty">Đang tải kho thực phẩm…</div></section>
+<section class="section-title"><div><div class="eyebrow">GỢI Ý TỪ CÔNG THỨC</div><h2>Hôm nay nấu món gì?</h2></div><span class="muted">Ưu tiên món phù hợp và nguyên liệu sắp hết hạn</span></section>
+<section id="recipes" class="recipes"><div class="empty">Đang tải công thức…</div></section>
+<div class="notice"><strong>Lưu ý:</strong> Bản MVP dùng hồ sơ cục bộ chung (local-user), chưa có đăng nhập hay phân quyền theo từng người. Không đưa dữ liệu nhạy cảm vào ứng dụng thử nghiệm. Cơ sở dữ liệu phải nằm trên ổ đĩa bền vững hoặc dịch vụ database do môi trường deploy hỗ trợ.</div>
+<footer><span>PantryChef · MVP</span><span>Ăn ngon hơn, lãng phí ít hơn 🌱</span></footer>
+</main>
+<dialog id="edit-dialog"><form id="edit-form"><h2>Sửa nguyên liệu</h2><input id="edit-id" type="hidden"><div class="form-grid"><div class="wide"><label for="edit-ingredient">Nguyên liệu</label><select id="edit-ingredient"></select></div><div><label for="edit-quantity">Số lượng</label><input id="edit-quantity" type="number" min="0.01" step="0.01" required></div><div><label for="edit-unit">Đơn vị</label><input id="edit-unit" required></div><div class="wide"><label for="edit-expiry">Hạn sử dụng</label><input id="edit-expiry" type="date"></div></div><div class="actions"><button type="submit">Lưu thay đổi</button><button class="secondary" type="button" onclick="document.querySelector('#edit-dialog').close()">Hủy</button></div></form></dialog>
+<script>
+const $=id=>document.getElementById(id);
+let ingredients=[], pantry=[], recipes=[];
+async function api(path, options={}) {
+  const response=await fetch('/api'+path,{headers:{'Content-Type':'application/json',...(options.headers||{})},...options});
+  if(!response.ok){let body={};try{body=await response.json()}catch{};throw new Error(body.error||`Lỗi HTTP ${response.status}`)}
+  if(response.status===204)return null;
+  return response.json();
+}
+function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function toast(message,error=false){const el=$('toast');el.hidden=false;el.textContent=message;el.className='toast'+(error?' error':'');setTimeout(()=>el.hidden=true,4500)}
+function fmtDate(date){if(!date)return 'Chưa ghi hạn';const today=new Date();today.setHours(0,0,0,0);const d=new Date(date+'T00:00:00');const days=Math.round((d-today)/86400000);if(days<0)return 'Đã quá hạn';if(days===0)return 'Hết hạn hôm nay';if(days<=3)return `Còn ${days} ngày`;return `HSD ${date}`}
+function optionsHTML(selected){return ingredients.map(i=>`<option value="${i.id}" ${Number(selected)===i.id?'selected':''}>${esc(i.name)} (${esc(i.canonical_unit)})</option>`).join('')}
+async function loadAll(){
+ try{
+  const data=await Promise.all([api('/ingredients'),api('/pantry'),api('/recipes'),api('/suggestions')]);
+  [ingredients,pantry,recipes]=data;
+  $('ingredient-count').textContent=ingredients.length;$('pantry-count').textContent=pantry.length;$('recipe-count').textContent=recipes.length;$('status').textContent='Đã kết nối database';
+  $('ingredient').innerHTML=optionsHTML(ingredients[0]?.id);$('edit-ingredient').innerHTML=optionsHTML(ingredients[0]?.id);
+  if(ingredients[0])$('unit').value=ingredients[0].canonical_unit;
+  renderPantry();renderRecipes(data[3]);
+ }catch(e){$('status').textContent='Không kết nối được';toast('Không tải được dữ liệu: '+e.message,true);$('inventory').innerHTML='<div class="empty">Không thể tải kho. Kiểm tra backend/database rồi thử lại.</div>';$('recipes').innerHTML='<div class="empty">Không thể tải gợi ý món ăn.</div>'}
+}
+$('ingredient').addEventListener('change',()=>{const item=ingredients.find(i=>i.id===Number($('ingredient').value));if(item)$('unit').value=item.canonical_unit});
+function renderPantry(){
+ if(!pantry.length){$('inventory').innerHTML='<div class="empty">Kho đang trống. Thêm nguyên liệu đầu tiên ở phía trên nhé.</div>';return}
+ $('inventory').innerHTML=pantry.map(p=>{const expired=p.expiry_date&&p.expiry_date<new Date().toISOString().slice(0,10);return `<article class="item"><div class="item-top"><div><h3>${esc(p.ingredient_name)}</h3><p>Số lượng: <strong>${p.quantity} ${esc(p.unit)}</strong></p></div><span class="chip ${expired?'missing':p.expiry_date?'warn':''}">${esc(fmtDate(p.expiry_date))}</span></div><div class="item-actions"><button class="secondary" onclick="editItem(${p.id})">Sửa</button><button class="danger" onclick="deleteItem(${p.id})">Xóa</button></div></article>`}).join('')
+}
+function renderRecipes(list){
+ if(!list.length){$('recipes').innerHTML='<div class="empty">Chưa có công thức phù hợp.</div>';return}
+ $('recipes').innerHTML=list.map(r=>`<article class="recipe"><div class="recipe-top"><div><span class="chip">${r.match_percent}% nguyên liệu chính đủ</span><h3 style="margin-top:10px">${esc(r.title)}</h3></div><span class="recipe-emoji">🍳</span></div><p>${esc(r.description)}</p><div class="recipe-meta"><span>◷ ${r.prep_minutes+r.cook_minutes} phút</span><span>${r.servings} phần</span><span>${r.urgent_ingredient_count?'⚠ Ưu tiên dùng sớm':'Gợi ý theo kho'}</span></div><strong style="font-size:12px">Nguyên liệu đã đủ</strong><ul class="ingredients-list">${r.present.map(i=>`<li>${esc(i.name)}: cần ${i.quantity} ${esc(i.unit)} · có ${i.available}</li>`).join('')||'<li>Chưa đủ nguyên liệu bắt buộc</li>'}</ul><strong style="font-size:12px">Nguyên liệu còn thiếu</strong><ul class="ingredients-list">${r.missing.map(i=>`<li>${esc(i.name)}: thiếu ${i.shortfall} ${esc(i.unit)}</li>`).join('')||'<li>Đã đủ theo số lượng công thức</li>'}</ul><strong style="font-size:12px">Cách nấu</strong><ol class="steps">${r.steps.map(s=>`<li>${esc(s)}</li>`).join('')}</ol><button onclick="cookRecipe(${r.id})" ${r.missing.some(i=>i.required!==false&&i.shortfall>0)?'disabled':''}>Đã nấu món này · cập nhật kho</button></article>`).join('')
+}
+$('add-form').addEventListener('submit',async e=>{e.preventDefault();try{await api('/pantry',{method:'POST',body:JSON.stringify({ingredient_id:Number($('ingredient').value),quantity:Number($('quantity').value),unit:$('unit').value,expiry_date:$('expiry').value||null})});$('quantity').value='1';$('expiry').value='';toast('Đã thêm nguyên liệu vào kho.');await loadAll()}catch(err){toast(err.message,true)}});
+window.editItem=id=>{const p=pantry.find(x=>x.id===id);if(!p)return;$('edit-id').value=p.id;$('edit-ingredient').value=p.ingredient_id;$('edit-quantity').value=p.quantity;$('edit-unit').value=p.unit;$('edit-expiry').value=p.expiry_date||'';$('edit-dialog').showModal()};
+$('edit-form').addEventListener('submit',async e=>{e.preventDefault();try{await api('/pantry/'+$('edit-id').value,{method:'PUT',body:JSON.stringify({ingredient_id:Number($('edit-ingredient').value),quantity:Number($('edit-quantity').value),unit:$('edit-unit').value,expiry_date:$('edit-expiry').value||null})});$('edit-dialog').close();toast('Đã cập nhật nguyên liệu.');await loadAll()}catch(err){toast(err.message,true)}});
+window.deleteItem=async id=>{if(!confirm('Xóa nguyên liệu này khỏi kho?'))return;try{await api('/pantry/'+id,{method:'DELETE'});toast('Đã xóa nguyên liệu.');await loadAll()}catch(e){toast(e.message,true)}};
+window.cookRecipe=async id=>{if(!confirm('Xác nhận đã nấu? Nguyên liệu bắt buộc sẽ được trừ khỏi kho.'))return;try{const r=await api('/recipes/'+id+'/cook',{method:'POST',body:'{}'});toast(r.message);await loadAll()}catch(e){toast(e.message,true)}};
+loadAll();
+</script>
+</body>
+</html>
